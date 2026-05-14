@@ -7,27 +7,26 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class ApiService {
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
-  // Simpan token
+  
   Future<void> saveToken(String token) async {
     await _storage.write(key: 'auth_token', value: token);
   }
 
-  // Ambil token
+  
   Future<String?> getToken() async {
     return await _storage.read(key: 'auth_token');
   }
 
-  // Hapus token (logout)
+  
   Future<void> deleteToken() async {
     await _storage.delete(key: 'auth_token');
   }
 
-  // LOGIN - Sesuai contoh di PDF
-  // LOGIN
+  
   Future<Map<String, dynamic>> login(String nim, String password) async {
     final url = Uri.parse('${Constants.BASE_URL}/api/auth/login');
 
-    // DEBUG: Print URL yang terbentuk
+    
     print('🔍 URL Login: $url');
 
     final response = await http.post(
@@ -39,7 +38,7 @@ class ApiService {
       body: jsonEncode({'username': nim, 'password': password}),
     );
 
-    // DEBUG: Print response
+    
     print('🔍 Status Code: ${response.statusCode}');
     print('🔍 Response Body: ${response.body}');
 
@@ -53,7 +52,7 @@ class ApiService {
     }
   }
 
-  // GET PRODUCTS (Draft) - Menggunakan Class Model
+  
   Future<ProductResponse> getProducts() async {
     final token = await getToken();
     final url = Uri.parse('${Constants.BASE_URL}/api/products');
@@ -75,7 +74,7 @@ class ApiService {
     }
   }
 
-  // CREATE PRODUCT (Draft) - Menggunakan Class Model
+  
   Future<Map<String, dynamic>> createProduct({
     required String name,
     required int price,
@@ -105,7 +104,7 @@ class ApiService {
     }
   }
 
-  // DELETE PRODUCT (Soft Delete)
+  
   Future<Map<String, dynamic>> deleteProduct(int productId) async {
     final token = await getToken();
     final url = Uri.parse('${Constants.BASE_URL}/api/products/$productId');
@@ -126,7 +125,7 @@ class ApiService {
     }
   }
 
-  // SUBMIT TUGAS - Sesuai contoh di PDF
+  
   Future<Map<String, dynamic>> submitTask({
     required String name,
     required int price,
